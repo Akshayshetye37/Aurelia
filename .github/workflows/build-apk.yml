@@ -32,8 +32,12 @@ jobs:
           storeFile=keystore/aurelia-build.jks
           PROPERTIES
       - run: flutter pub get
-      - name: Build release APK without R8 shrink
-        run: flutter build apk --release --no-shrink
+      - name: Disable release shrinking for missing optional ML Kit language classes
+        run: |
+          sed -i 's/minifyEnabled = true/minifyEnabled = false/' android/app/build.gradle
+          sed -i 's/shrinkResources = true/shrinkResources = false/' android/app/build.gradle
+      - name: Build release APK
+        run: flutter build apk --release
       - name: Verify APK
         run: |
           test -s build/app/outputs/flutter-apk/app-release.apk
