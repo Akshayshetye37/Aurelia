@@ -23,6 +23,7 @@ jobs:
           cache: true
       - name: Create temporary signing key
         run: |
+          mkdir -p android/keystore
           keytool -genkeypair -v -keystore android/keystore/aurelia-build.jks -storepass changeit -keypass changeit -alias aurelia -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Aurelia Build, OU=Android, O=Aurelia, L=Mumbai, ST=Maharashtra, C=IN"
           cat > android/key.properties <<'PROPERTIES'
           storePassword=changeit
