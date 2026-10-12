@@ -21,8 +21,18 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Create temporary signing key
+        run: |
+          keytool -genkeypair -v -keystore android/keystore/aurelia-build.jks -storepass changeit -keypass changeit -alias aurelia -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Aurelia Build, OU=Android, O=Aurelia, L=Mumbai, ST=Maharashtra, C=IN"
+          cat > android/key.properties <<'PROPERTIES'
+          storePassword=changeit
+          keyPassword=changeit
+          keyAlias=aurelia
+          storeFile=keystore/aurelia-build.jks
+          PROPERTIES
       - run: flutter pub get
-      - run: flutter build apk --release
+      - name: Build release APK without R8 shrink
+        run: flutter build apk --release --no-shrink
       - name: Verify APK
         run: |
           test -s build/app/outputs/flutter-apk/app-release.apk
