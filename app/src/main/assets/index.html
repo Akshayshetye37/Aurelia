@@ -868,7 +868,7 @@ function parseIdText(text){
  return {idType,idNumber,name:name.replace(/\s{2,}/g,' '),dob:dob?.[1]||''};
 }
 let pendingBookingIdPhoto='';
-async function runBookingIdOCR(e){
+async async function runBookingIdOCR(e){
   const file=e?.target?.files?.[0];
   const status=document.getElementById('bkOcrStatus');
   if(file){
