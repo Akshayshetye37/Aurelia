@@ -1,4 +1,4 @@
-name: Build AURELIA Android APK
+name: Build AURELIA Android APK (HTML restore fix)
 
 on:
   workflow_dispatch:
